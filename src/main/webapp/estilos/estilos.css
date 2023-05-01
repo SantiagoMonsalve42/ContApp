@@ -1,0 +1,13 @@
+body{
+    background-color: #c7c7c7;
+}
+.red-title{
+    color: #f20505;
+}
+.container-color{
+    background-color: #e8e6e6;
+    border-radius: 10px;
+}
+.min-vh-100 {
+    min-height: 80vh!important;
+}
