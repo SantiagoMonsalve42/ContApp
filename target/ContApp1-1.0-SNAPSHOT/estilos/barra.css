@@ -1,0 +1,18 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 18/05/2023, 6:59:00 p. m.
+    Author     : Santiago
+*/
+
+li:hover{
+    color: black;
+    background-color: white;
+    border-radius: 10%;
+}
+li a:hover{
+    color: black !important;
+    font-size: 20px;
+}

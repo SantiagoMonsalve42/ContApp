@@ -15,16 +15,12 @@ import java.sql.SQLException;
  */
 public class Conn {
     public ConnectionImpl getConn(){
-        ConnectionImpl connection = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            connection=(ConnectionImpl)
-                DriverManager.getConnection("jdbc:mysql://localhost:3306/contapp","root","admin");  
-            System.out.println("sisasssssssssssssssssssssssss");
+            return (ConnectionImpl)DriverManager.getConnection("jdbc:mysql://localhost:3306/contapp","root","admin");  
         }
         catch(Exception ex){
-            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex);
         }
-        return connection;
     }
 }

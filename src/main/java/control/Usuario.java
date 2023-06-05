@@ -6,6 +6,8 @@ package control;
 
 import beans.UsuarioBean;
 import bussines.implementations.UsuarioBussines;
+import com.google.gson.Gson;
+import dto.ResponseDto;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,37 +24,11 @@ import java.sql.SQLException;
  */
 @WebServlet(name = "Usuario", urlPatterns = {"/usuario"})
 public class Usuario extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            UsuarioBussines objBussines = new UsuarioBussines();
-            objBussines.create(new UsuarioBean(1,"","","","",1));
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Usuario</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Usuario at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
-        }
+    UsuarioBussines objBussines;
+    public Usuario() {
+        this.objBussines = new UsuarioBussines();
     }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -66,7 +42,14 @@ public class Usuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String tipo = request.getParameter("TIPO_ACCION");
+        switch(tipo){
+            case "GETBYEEMAIL":
+                   this.getMyEmail(request, response);
+                 break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -80,7 +63,13 @@ public class Usuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        String tipo = request.getParameter("TIPO_ACCION");
+        if("REGISTRO".equals(tipo)){
+            this.registro(request, response);
+        }else{
+            this.login(request, response);
+        }
     }
 
     /**
@@ -92,5 +81,54 @@ public class Usuario extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    public void registro(HttpServletRequest request, HttpServletResponse response){
+        try {
+            String documento = request.getParameter("documento");
+            String tipo_documento = request.getParameter("tipo_documento");
+            String user = request.getParameter("user");
+            String mail = request.getParameter("mail");
+            String pass = request.getParameter("pass");
+            UsuarioBean objReq = new UsuarioBean(user,mail,pass,documento,Integer.parseInt(tipo_documento));
+            ResponseDto<UsuarioBean> resultado = this.objBussines.create(objReq);
+            String responseString = new Gson().toJson(resultado);
+            PrintWriter out = response.getWriter();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            out.print(responseString);
+            out.flush();
+           
+        }catch(Exception e){
+            System.out.println(e);
+        } 
+    }
+    public void getMyEmail(HttpServletRequest request, HttpServletResponse response){
+       try {
+            String email = request.getParameter("email");
+            ResponseDto<UsuarioBean> resultado = this.objBussines.get(email);
+            String responseString = new Gson().toJson(resultado);
+            PrintWriter out = response.getWriter();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            out.print(responseString);
+            out.flush(); 
+        }catch(Exception e){
+            System.out.println(e);
+        } 
+    }
+     public void login(HttpServletRequest request, HttpServletResponse response){
+        try {
+            String email = request.getParameter("email");
+            String password = request.getParameter("pass");
+            UsuarioBean objReq = new UsuarioBean(email,password);
+            ResponseDto<Boolean> resultado = this.objBussines.login(objReq);
+            String responseString = new Gson().toJson(resultado);
+            PrintWriter out = response.getWriter();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            out.print(responseString);
+            out.flush(); 
+        }catch(Exception e){
+            System.out.println(e);
+        } 
+    }
 }

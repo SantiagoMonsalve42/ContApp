@@ -5,6 +5,7 @@
 package bussines.interfaces;
 
 import beans.UsuarioBean;
+import dto.ResponseDto;
 import java.util.List;
 
 /**
@@ -12,9 +13,11 @@ import java.util.List;
  * @author Santiago
  */
 public interface IUsuarioBussines <UsuarioBean>{
-    UsuarioBean create(UsuarioBean obj);
-    UsuarioBean update(UsuarioBean obj);
-    List<UsuarioBean> get();
-    UsuarioBean get(int id);
-    Boolean delete(int id);
+    ResponseDto<UsuarioBean> create(UsuarioBean obj);
+    ResponseDto<UsuarioBean> update(UsuarioBean obj);
+    ResponseDto<List<UsuarioBean>> get();
+    ResponseDto<UsuarioBean> get(int id);
+    ResponseDto<UsuarioBean> get(String email);
+    ResponseDto<Boolean> delete(int id);
+    ResponseDto<Boolean> login(UsuarioBean obj);
 }

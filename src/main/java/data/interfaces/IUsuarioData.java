@@ -11,5 +11,6 @@ import beans.UsuarioBean;
  * @author Santiago
  */
 public interface IUsuarioData extends IBaseCrud<UsuarioBean>{
-    
+    UsuarioBean getByEmail(String email);
+    Boolean verifyExists(UsuarioBean obj);
 }

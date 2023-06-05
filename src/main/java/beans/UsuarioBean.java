@@ -24,6 +24,17 @@ public class UsuarioBean {
         this.documento = documento;
         this.id_tipo_documento = id_tipo_documento;
     }
+    public UsuarioBean(String usuario, String email, String password, String documento, int id_tipo_documento) {
+        this.usuario = usuario;
+        this.email = email;
+        this.password = password;
+        this.documento = documento;
+        this.id_tipo_documento = id_tipo_documento;
+    }
+    public UsuarioBean(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     public UsuarioBean() {
     }

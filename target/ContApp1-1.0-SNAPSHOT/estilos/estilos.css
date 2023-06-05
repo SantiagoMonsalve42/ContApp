@@ -1,0 +1,26 @@
+body{
+    background-color: #c7c7c7;
+}
+.red-title{
+    color: #f20505;
+}
+.container-color{
+    background-color: #e8e6e6;
+    border-radius: 10px;
+}
+.min-vh-100 {
+    min-height: 80vh!important;
+}
+.barra_item{
+  color: #fFFFFF !important;
+  font-size: 20px;
+}
+.barra_item_active{
+  color: black !important;
+  font-size: 20px;
+}
+.active{
+    color: black;
+    background-color: white;
+   border-radius: 10%;
+}
